@@ -17,8 +17,7 @@ const searchTerm = ref(null);
       v-if="props.curr > 1"
       id="previous"
       v-slot="{ href, navigate }"
-      :to="props.block ? `/blocks?p=${props.curr-1}`
-        : `/txes?block=${props.blockNumber}&?p=${props.curr-1}`"
+      :to="`/blocks?p=${props.curr-1}`"
     >
       <button
         :href="href"
@@ -35,8 +34,7 @@ const searchTerm = ref(null);
       v-if="props.curr < Math.ceil(last / bpp)"
       id="next"
       v-slot="{ href, navigate }"
-      :to="props.block ? `/blocks?p=${props.curr+1}`
-        : `/txes?block=${props.blockNumber}&?p=${props.curr+1}`"
+      :to="`/blocks?p=${props.curr-1}`"
     >
       <button
         :href="href"
