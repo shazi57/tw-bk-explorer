@@ -34,7 +34,7 @@ const searchTerm = ref(null);
       v-if="props.curr < Math.ceil(last / bpp)"
       id="next"
       v-slot="{ href, navigate }"
-      :to="`/blocks?p=${props.curr-1}`"
+      :to="`/blocks?p=${props.curr+1}`"
     >
       <button
         :href="href"

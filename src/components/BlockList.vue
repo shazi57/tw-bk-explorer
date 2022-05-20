@@ -17,7 +17,7 @@ const props = defineProps({
       <div>Gas Used</div>
       <div>Gas Limit</div>
       <div class="base-fee-header">
-        Base Fee Per Gas ("Gwei")
+        Base Fee Per Gas (Gwei)
       </div>
     </div>
     <div
