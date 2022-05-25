@@ -2,7 +2,9 @@
 </script>
 
 <template>
-  <h1>Ethereum Block Explorer</h1>
+  <router-link to="/">
+    <h1>Ethereum Block Explorer</h1>
+  </router-link>
   <router-view />
 </template>
 

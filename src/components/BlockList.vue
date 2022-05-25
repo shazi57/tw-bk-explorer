@@ -40,7 +40,7 @@ const props = defineProps({
         </div>
         <div class="transactions">
           <router-link
-            :to="`/txes?block=${Number(block.result.number)}`"
+            :to="`/txes?block=${Number(block.result.number)}&p=1`"
           >
             {{ Number(block.result.transactions.length) }}
           </router-link>

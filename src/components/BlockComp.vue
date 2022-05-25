@@ -1,6 +1,6 @@
 <script setup>
-import timeAgo from '../lib/timeAgo';
 import { ethers } from 'ethers';
+import timeAgo from '../lib/timeAgo';
 
 const props = defineProps({
   block: Object,
@@ -50,10 +50,10 @@ const props = defineProps({
       <div id="b-gasUsed">
         {{ ethers.utils.commify(props.block.gasUsed) }}
       </div>
-      <div class="b-header">
+      <div class="b-header" v-if="props.block.baseFeePerGas">
         Base Fee Per Gas
       </div>
-      <div id="b-baseFee">
+      <div v-if="props.block.baseFeePerGas" id="b-baseFee">
         {{ ethers.utils.formatUnits(props.block.baseFeePerGas, 'gwei') }} Gwei
       </div>
       <div class="b-header">

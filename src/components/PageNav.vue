@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 const props = defineProps({
   curr: Number,
@@ -10,6 +10,9 @@ const props = defineProps({
 });
 
 const searchTerm = ref(null);
+
+const prevEndpoint = computed(() => (props.block ? `/blocks?p=${props.curr - 1}` : `/txes?block=${props.blockNumber}&p=${props.curr - 1}`));
+const nextEndpoint = computed(() => (props.block ? `/blocks?p=${props.curr + 1}` : `/txes?block=${props.blockNumber}&p=${props.curr + 1}`));
 </script>
 <template>
   <div id="container">
@@ -17,7 +20,7 @@ const searchTerm = ref(null);
       v-if="props.curr > 1"
       id="previous"
       v-slot="{ href, navigate }"
-      :to="`/blocks?p=${props.curr-1}`"
+      :to="prevEndpoint"
     >
       <button
         :href="href"
@@ -28,13 +31,13 @@ const searchTerm = ref(null);
       </button>
     </router-link>
     <div id="totalPages">
-      {{ `total of ${Math.ceil(last / bpp)} pages` }}
+      {{ `${curr} of ${Math.ceil(last / bpp)} pages` }}
     </div>
     <router-link
       v-if="props.curr < Math.ceil(last / bpp)"
       id="next"
       v-slot="{ href, navigate }"
-      :to="`/blocks?p=${props.curr+1}`"
+      :to="nextEndpoint"
     >
       <button
         :href="href"

@@ -27,6 +27,7 @@ const {
     :curr="currPage"
     :last="latestBlock"
     :bpp="blocksPerPage"
+    :block="true"
   />
   <BlockList :blocks="currentBlocks" />
 </template>

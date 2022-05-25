@@ -1,19 +1,36 @@
 <script>
 import { storeToRefs } from 'pinia';
+import { onBeforeRouteUpdate } from 'vue-router';
 import { useBlockStore } from '../store/blockStore';
 import PageNav from '../components/PageNav.vue';
+import TxesList from '../components/TxesList.vue';
 
 export default {
-  beforeRouteEnter(to, from, next) {
-    const { getBlockWithTransactions } = useBlockStore();
-    getBlockWithTransactions()
+  components: {
+    PageNav,
+    TxesList,
+  },
+  beforeRouteEnter(to, _, next) {
+    const store = useBlockStore();
+    const { getBlockWithTransactions } = store;
+    const blockToQuery = Number(to.query.block);
+    getBlockWithTransactions(blockToQuery)
       .then(() => {
+        store.currPage = Number(to.query.p);
         next();
       });
   },
   setup() {
-    const { currentTxes } = storeToRefs(useBlockStore());
-    return { currentTxes };
+    onBeforeRouteUpdate((to) => {
+      const store = useBlockStore();
+      store.currPage = Number(to.query.p);
+    });
+    const {
+      currentTxes, currBlockNumber, currPage, txesPerPage, pageContent
+    } = storeToRefs(useBlockStore());
+    return {
+      currentTxes, currBlockNumber, currPage, txesPerPage, pageContent,
+    };
   },
 };
 </script>
@@ -21,7 +38,10 @@ export default {
 <template>
   <PageNav
     :curr="currPage"
-    :last="latestBlock"
-    :bpp="blocksPerPage"
-  />  <!-- <p>{{ currentTxes }}</p> -->
+    :last="currentTxes.length-1"
+    :bpp="txesPerPage"
+    :block="false"
+    :block-number="currBlockNumber"
+  />
+  <TxesList :txes="pageContent" />
 </template>
